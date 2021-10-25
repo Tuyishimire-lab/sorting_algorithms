@@ -9,33 +9,34 @@
  * 
  */
 
-int partitition(int *array, int start, int end, int size){
-    int pivot = array[end];
-    int i = start, j, temp;
+int partitition(int *array, int start, int end, int size)
+{
+        int pivot = array[end];
+        int i = start, j, temp;
 
-    for(j = start; j<end; j++)
-    {
-        if(array[j]<= pivot)
+        for(j = start; j<end; j++)
         {
-            if(i != j)
-            {
-                temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-                print_array(array, size);
-            }
-            i++;
+                if(array[j]<= pivot)
+                {
+                        if(i != j)
+                        {
+                                temp = array[i];
+                                array[i] = array[j];
+                                array[j] = temp;
+                                print_array(array, size);
+                        }
+                        i++;
+                }
         }
-    }
-    if(i != end)
-    {
-        temp =array[i];
-        array[i] = array[end];
-        array[end] =temp;
-        print_array(array, size);
-    }
-    printf("return i = %d\n", i);
-    return(i);
+        if(i != end)
+        {
+                temp =array[i];
+                array[i] = array[end];
+                array[end] =temp;
+                print_array(array, size);
+        }
+        printf("return i = %d\n", i);
+        return(i);
 }
 /**
  * QuickSort -quick sorts with recursion
@@ -45,13 +46,15 @@ int partitition(int *array, int start, int end, int size){
  * size: size of full array
  * 
  */
-void quickSort(int *array, int start, int end, int size){
-    int pivot;
-    if(start < end)
-    {
-        pivot = partitition(array, start, end, size);
-        quickSort(array, start, pivot - 1, size);
-        quickSort(array, pivot + 1, end, size);
+void quickSort(int *array, int start, int end, int size)
+{
+        int pivot;
+        
+        if(start < end)
+        {
+                pivot = partitition(array, start, end, size);
+                quickSort(array, start, pivot - 1, size);
+                quickSort(array, pivot + 1, end, size);
     }
 }
 /**
@@ -60,8 +63,9 @@ void quickSort(int *array, int start, int end, int size){
  * @size: size of array
  * 
  */
-void quick_sort(int *array, size_t size){
-    if(array == NULL || size < 2)
-        return;
-    quickSort(array, 0, size - 1, size);
+void quick_sort(int *array, size_t size)
+{
+        if(array == NULL || size < 2)
+                return;
+        quickSort(array, 0, size - 1, size);
 }

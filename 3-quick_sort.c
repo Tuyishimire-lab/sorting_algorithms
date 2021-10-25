@@ -50,9 +50,7 @@ void quickSort(int *array, int start, int end, int size){
     if(start < end)
     {
         pivot = partitition(array, start, end, size);
-        printf("first recursive, start[%d] to pivot-a[%d]\n", start, pivot-1);
         quickSort(array, start, pivot - 1, size);
-        printf("second recursive, pivot+1 [%d] to end [%d]\n", pivot + 1, end);
         quickSort(array, pivot + 1, end, size);
     }
 }

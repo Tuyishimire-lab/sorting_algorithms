@@ -1,71 +1,72 @@
 #include "sort.h"
 /**
- * Partitition - for  spliting our array
- * @array: array to take in
- * @start: array beginning
- * @end: array ending part
- * @size: the whole array
- * Return: position of pivot
- * 
- */
-
-int partitition(int *array, int start, int end, int size)
-{
-        int pivot = array[end];
-        int i = start, j, temp;
-
-        for(j = start; j<end; j++)
-        {
-                if(array[j]<= pivot)
-                {
-                        if(i != j)
-                        {
-                                temp = array[i];
-                                array[i] = array[j];
-                                array[j] = temp;
-                                print_array(array, size);
-                        }
-                        i++;
-                }
-        }
-        if(i != end)
-        {
-                temp =array[i];
-                array[i] = array[end];
-                array[end] =temp;
-                print_array(array, size);
-        }
-        printf("return i = %d\n", i);
-        return(i);
-}
-/**
- * QuickSort -quick sorts with recursion
- * @array: array to sort through
- * @start: beginning of array
- * @end: end of array or its sub
- * size: size of full array
- * 
- */
-void quickSort(int *array, int start, int end, int size)
-{
-        int pivot;
-        
-        if(start < end)
-        {
-                pivot = partitition(array, start, end, size);
-                quickSort(array, start, pivot - 1, size);
-                quickSort(array, pivot + 1, end, size);
-    }
-}
-/**
- * quick_sort -quick sort an array 
- * @array: array to sort
- * @size: size of array
- * 
- */
+  * quick_sort - quicksort algorithm
+  * @array: array to be sorted
+  * @size: size of array
+  */
 void quick_sort(int *array, size_t size)
 {
-        if(array == NULL || size < 2)
-                return;
-        quickSort(array, 0, size - 1, size);
+	if (array == NULL || size <= 1)
+		return;
+	sort_alg(array, 0, size - 1, size);
 }
+
+/**
+  * sort_alg - recursive sorting algorithm
+  * @arr: array
+  * @left: leftmost index
+  * @right: rightmost index
+  * @size: full size of array
+  */
+void sort_alg(int *arr, int left, int right, size_t size)
+{
+	int pivot;
+
+	if (left < right)
+	{
+		pivot = split(arr, left, right, size);
+		sort_alg(arr, left, pivot - 1, size);
+		sort_alg(arr, pivot + 1, right, size);
+	}
+}
+
+/**
+  * split - split array
+  * @arr: array
+  * @left: leftmost index
+  * @right: rightmost index
+  * @size: full array size
+  * Return: pivot index
+  */
+int split(int *arr, int left, int right, size_t size)
+{
+	int i, j, pivot, tmp;
+
+	pivot = arr[right];
+	i = left;
+
+	for (j = left; j < right; j++)
+	{
+		if (arr[j] < pivot)
+		{
+			if (i != j)
+			{
+				tmp = arr[j];
+				arr[j] = arr[i];
+				arr[i] = tmp;
+				print_array(arr, size);
+			}
+			i++;
+		}
+	}
+	if (arr[i] != arr[right])
+	{
+		tmp = arr[i];
+		arr[i] = arr[right];
+		arr[right] = tmp;
+		print_array(arr, size);
+	}
+
+	return (i);
+}
+

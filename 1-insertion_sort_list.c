@@ -1,51 +1,43 @@
 #include "sort.h"
 
 /**
- * insertion_sort_list - inserts right unsorted side into left sorted side
- * @list: doubly linked list to sort
+ * insertion_sort_list - sorts a doubly linked list  of integers in ascending
+ * order using the Insertion sort algorithm
  *
+ * @list: double pointer to doubly-linked list
+ *
+ * Return: Nothing
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *c, *p, *nextnode;
+	listint_t *choom = NULL;
+	listint_t *tmp = NULL;
+	listint_t *hold = NULL;
 
-	if (list == NULL || !(*list) || (*list)->next == NULL)
+	if (!list || !(*list) || !(*list)->next)
 		return;
-	c = (*list)->next;
-	nextnode = c->next;
-	while (c)
+
+	choom = (*list)->next;
+	while (choom)
 	{
-		if (c->n < c->prev->n)
+		tmp = choom->prev;
+		hold = choom->next;
+		while (tmp && choom->n < tmp->n)
 		{
-			p = c->prev;
-			while (p && (c->n < p->n))
-			{
-				if (!(p->prev))
-				{
-					p->prev = c;
-					c->prev->next = c->next;
-					if (c->next)
-						c->next->prev = c->prev;
-					c->next = p;
-					c->prev = NULL;
-					*list = c;
-				}
-				else
-				{
-					c->prev->next = c->next;
-					if (c->next)
-						c->next->prev = c->prev;
-					p->prev->next = c;
-					c->prev = p->prev;
-					p->prev = c;
-					c->next = p;
-				}
-				print_list(*list);
-				p = c->prev;
-			}
+			hold = choom->next;
+			if (tmp->prev != NULL)
+				tmp->prev->next = choom;
+			choom->prev = tmp->prev;
+			tmp->prev = choom;
+			choom->next = tmp;
+			tmp->next = hold;
+			if (hold)
+				hold->prev = tmp;
+			if (!choom->prev)
+				(*list) = choom;
+			print_list(*list);
+			tmp = choom->prev;
 		}
-		c = nextnode;
-		c ? (nextnode = c->next) : (nextnode = NULL);
+		choom = hold;
 	}
 }
-

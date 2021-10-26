@@ -1,75 +1,73 @@
 #include "sort.h"
 
 /**
- * quick_sort - sorts an array with the Quicksort algorithm
- * @array: array of ints to sort
- * @size: size of the array
+ * partition - partitions the array
+ * @array: array to take in
+ * @start: start of array;
+ * @end: end of array
+ * @size: full size of array
+ * Return: position of pivot
+ */
+int partition(int *array, int start, int end, int size)
+{
+	int pivot = array[end];
+	int i = start, j, temp;
+
+	for (j = start; j < end; j++)
+	{
+		if (array[j] <= pivot)
+		{
+			if (i != j)
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+				print_array(array, size);
+			}
+			i++;
+		}
+	}
+	if (i != end)
+	{
+		temp = array[i];
+		array[i] = array[end];
+		array[end] = temp;
+		print_array(array, size);
+	}
+	printf("return i=%d\n", i);
+	return (i);
+}
+
+/**
+ * quickSort - quick sorts with recursion
+ * @array: array to sort through
+ * @start: start of array or subarray
+ * @end: end of array or subarray
+ * @size: size of full array
+ */
+void quickSort(int *array, int start, int end, int size)
+{
+	int pivot;
+
+	if (start < end)
+	{
+		pivot = partition(array, start, end, size);
+		printf("first recursive, start [%d] to pivot-1[%d]\n", start, pivot-1);
+		quickSort(array, start, pivot - 1, size);
+		printf("second recursive, pivot+1 [%d] to end [%d]\n", pivot+1, end);
+		quickSort(array, pivot + 1, end, size);
+	}
+}
+
+/**
+ * quick_sort - quick sorts an array
+ * @array: array to sort
+ * @size: size of array
  */
 void quick_sort(int *array, size_t size)
 {
-	if (size < 2)
+	if (array == NULL || size < 2)
 		return;
-
-	quick_recursion(array, 0, (int)size - 1, size);
+	quickSort(array, 0, size - 1, size);
 }
 
-/**
- * quick_recursion - helper function for Quicksort
- * @array: array to sort
- * @left: index of the left element
- * @right: index of the right element
- * @size: size of the array
- */
-void quick_recursion(int *array, int left, int right, size_t size)
-{
-	int piv;
-
-	if (left < right)
-	{
-		piv = partition(array, left, right, size);
-		quick_recursion(array, left, piv - 1, size);
-		quick_recursion(array, piv + 1, right, size);
-	}
-}
-
-/**
- * partition - gives a piv index for Quicksort
- * @array: array to find the piv in
- * @left: index of the left element
- * @right: index of the right element
- * @size: size of the array
- *
- * Return: the index of the piv element
- */
-int partition(int *array, int left, int right, size_t size)
-{
-	int tmp, i;
-	int j;
-
-	i = left - 1;
-
-	for (j = left; j < right; j++)
-	{
-		if (array[j] < array[right])
-		{
-			i++;
-			if (i != j)
-			{
-				tmp = array[i];
-				array[i] = array[j];
-				array[j] = tmp;
-				print_array(array, size);
-			}
-		}
-	}
-
-	if (array[right] < array[i + 1])
-	{
-		tmp = array[i + 1];
-		array[i + 1] = array[right];
-		array[right] = tmp;
-		print_array(array, size);
-	}
-
-	return (i + 1);
-}

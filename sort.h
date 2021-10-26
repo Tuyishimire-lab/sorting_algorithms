@@ -1,5 +1,5 @@
-#ifndef SORT_H_
-#define SORT_H_
+#ifndef __SORT__H__
+#define __SORT__H__
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,13 +19,23 @@ typedef struct listint_s
 
 void print_list(const listint_t *list);
 void print_array(const int *array, size_t size);
+
 void bubble_sort(int *array, size_t size);
 void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
-void shell_sort(int *array, size_t size);
-void cocktail_sort_list(listint_t **list);
 void counting_sort(int *array, size_t size);
 void merge_sort(int *array, size_t size);
-#endif
 
+int checklist(listint_t **list, listint_t **current);
+void checkend(listint_t **current, listint_t **tmp, listint_t *list);
+int checkbeg(listint_t **current, listint_t **tmp,
+	     listint_t **hold, listint_t **list);
+int checkjuice(listint_t **current, listint_t **tmp,
+	       listint_t *list);
+int partition(int *array, size_t start, size_t end, size_t size);
+void realqs(int *array, int start, int end, size_t size);
+void split(int *tmp_arr, size_t left, size_t right, int *array);
+void combine(int *array, size_t left, size_t middle,
+	     size_t right, int *tmp_arr);
+#endif

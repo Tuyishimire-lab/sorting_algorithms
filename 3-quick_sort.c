@@ -1,73 +1,79 @@
 #include "sort.h"
+#include <stdio.h>
 
 /**
- * partition - partitions the array
- * @array: array to take in
- * @start: start of array;
- * @end: end of array
- * @size: full size of array
- * Return: position of pivot
+ * quick_sort - sorts an array using the quick sort algorithm
+ *
+ * @array: pointer to integer array
+ * @size: size of integer array
+ *
+ * Return: Nothing
  */
-int partition(int *array, int start, int end, int size)
+void quick_sort(int *array, size_t size)
 {
-	int pivot = array[end];
-	int i = start, j, temp;
-
-	for (j = start; j < end; j++)
-	{
-		if (array[j] <= pivot)
-		{
-			if (i != j)
-			{
-				temp = array[i];
-				array[i] = array[j];
-				array[j] = temp;
-				print_array(array, size);
-			}
-			i++;
-		}
-	}
-	if (i != end)
-	{
-		temp = array[i];
-		array[i] = array[end];
-		array[end] = temp;
-		print_array(array, size);
-	}
-	printf("return i=%d\n", i);
-	return (i);
+	if (!array || size < 2)
+		return;
+	realqs(array, 0, size - 1, size);
 }
 
 /**
- * quickSort - quick sorts with recursion
- * @array: array to sort through
- * @start: start of array or subarray
- * @end: end of array or subarray
- * @size: size of full array
+ * realqs - recursive function for sorting array
+ *
+ * @array: pointer to integer array
+ * @start: starting index
+ * @end: ending index
+ * @size: size of the array
+ *
+ * Return: Nothing
  */
-void quickSort(int *array, int start, int end, int size)
+void realqs(int *array, int start, int end, size_t size)
 {
 	int pivot;
 
 	if (start < end)
 	{
 		pivot = partition(array, start, end, size);
-		printf("first recursive, start [%d] to pivot-1[%d]\n", start, pivot-1);
-		quickSort(array, start, pivot - 1, size);
-		printf("second recursive, pivot+1 [%d] to end [%d]\n", pivot+1, end);
-		quickSort(array, pivot + 1, end, size);
+		realqs(array, start, pivot - 1, size);
+		realqs(array, pivot + 1, end, size);
 	}
 }
 
 /**
- * quick_sort - quick sorts an array
- * @array: array to sort
- * @size: size of array
+ * partition - partitions array, swaps values, and prints
+ *
+ * @array: pointer to integer array
+ * @start: starting index
+ * @end: ending index
+ * @size: size of the array
+ *
+ * Return: Nothing
  */
-void quick_sort(int *array, size_t size)
+int partition(int *array, size_t start, size_t end, size_t size)
 {
-	if (array == NULL || size < 2)
-		return;
-	quickSort(array, 0, size - 1, size);
-}
+	size_t i = start - 1;
+	size_t j;
+	int tmp = 0;
+	int tmp2 = 0;
+	size_t place = 0;
 
+	for (j = start; j < end; j++)
+	{
+		if (array[j] < array[end])
+		{
+			i++;
+			tmp = array[i];
+			array[i] = array[j];
+			array[j] = tmp;
+			if (array[j] != array[i])
+				print_array(array, size);
+		}
+	}
+	i++;
+	place = i;
+	tmp2 = array[i];
+	array[i] = array[end];
+	array[end] = tmp2;
+	if (array[j] != array[i])
+		print_array(array, size);
+	return (place);
+}

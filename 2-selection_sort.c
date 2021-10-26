@@ -1,4 +1,5 @@
 #include "sort.h"
+
 /**
   * selection_sort - selection sort algorithm
   * @array: array to sort
@@ -28,4 +29,3 @@ void selection_sort(int *array, size_t size)
 		}
 	}
 }
-
